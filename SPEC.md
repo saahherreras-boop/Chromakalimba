@@ -18,29 +18,39 @@ The target instrument is the standard **17-key kalimba in the key of C**. Its de
 
 This matters because a generic tuner shows you "F#" with no idea which physical tine that is. ChromaKalimba should show the player **the actual instrument** — a picture of the tine layout — and light up the tine being struck.
 
-Standard 17-key C layout, center outward:
+### Confirmed tine layout
 
-| Tine # (physical, left to right) | Note |
-|---|---|
-| 1 | D5 |
-| 2 | B4 |
-| 3 | G4 |
-| 4 | E4 |
-| 5 | C4 |
-| 6 | A4 |
-| 7 | F4 |
-| 8 | D4 |
-| 9 | C5 (center — longest tine) |
-| 10 | E5 |
-| 11 | G5 |
-| 12 | B5 |
-| 13 | D6 |
-| 14 | F5 |
-| 15 | A5 |
-| 16 | C6 |
-| 17 | E6 |
+**CONFIRMED against the physical instrument, Sep 30 2026.** Read directly from the markings stamped on each tine.
 
-> **UNCONFIRMED.** The exact numbering convention must be verified against Thomas's physical instrument before build. The principle — center-out alternation, not linear — is the part that must be right. See Issue: "Confirm tine layout against physical instrument."
+**Numbering convention: right to left, 1 through 17.** Tine 1 is the outermost tine on the right-hand side; tine 17 is the outermost on the left. Tine 9 is the centre tine — the longest, and the lowest note on the instrument.
+
+Each tine is stamped, top to bottom, with: **letter, octave dots, numbered-notation degree.** Dots sit above the number and raise it by one octave each (1 = C, 2 = D, 3 = E, 4 = F, 5 = G, 6 = A, 7 = B).
+
+| Tine # | Stamped | Note | Frequency (A4 = 440 Hz) |
+|---|---|---|---|
+| 1 | D ·· 2 | D6 | 1174.66 Hz |
+| 2 | B · 7 | B5 | 987.77 Hz |
+| 3 | G · 5 | G5 | 783.99 Hz |
+| 4 | E · 3 | E5 | 659.25 Hz |
+| 5 | C · 1 | C5 | 523.25 Hz |
+| 6 | A 6 | A4 | 440.00 Hz |
+| 7 | F 4 | F4 | 349.23 Hz |
+| 8 | D 2 | D4 | 293.66 Hz |
+| **9** | **C 1** | **C4 (centre, longest tine, lowest note)** | **261.63 Hz** |
+| 10 | E 3 | E4 | 329.63 Hz |
+| 11 | G 5 | G4 | 392.00 Hz |
+| 12 | B 7 | B4 | 493.88 Hz |
+| 13 | D · 2 | D5 | 587.33 Hz |
+| 14 | F · 4 | F5 | 698.46 Hz |
+| 15 | A · 6 | A5 | 880.00 Hz |
+| 16 | C ·· 1 | C6 | 1046.50 Hz |
+| 17 | E ·· 3 | E6 | 1318.51 Hz |
+
+**Detection range:** 261.63 Hz (C4) to 1318.51 Hz (E6) — just over two octaves. Pitch detection only ever needs to resolve within this window, which simplifies the algorithm considerably.
+
+**Note set:** the instrument is fully diatonic in C major. There are no sharps or flats on a standard 17-key C kalimba, so only seven pitch classes across three octaves — 17 possible targets in total. Any detected pitch snaps to the nearest of these 17, never to a chromatic note the instrument cannot produce.
+
+**Verification:** the letter names and the numbered-notation degrees were read as two independent markings and agree at every tine. The layout also matches the standard 17-key C kalimba: centre-out alternation, odd tines climbing to the right, even tines climbing to the left.
 
 ## 3. Core user flow
 
